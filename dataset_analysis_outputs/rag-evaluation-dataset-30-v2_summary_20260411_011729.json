@@ -1,0 +1,178 @@
+{
+  "dataset_name": "rag-evaluation-dataset-30-v2",
+  "generated_at": "20260411_011729",
+  "structural_summary": {
+    "total_examples": 30,
+    "declared_type_counts": {
+      "cannot_answer": 5,
+      "multi": 10,
+      "single": 15
+    },
+    "inferred_type_counts": {
+      "cannot_answer": 5,
+      "multi": 10,
+      "single": 15
+    },
+    "duplicate_question_count": 0,
+    "structural_issue_count": 1,
+    "examples_with_missing_question": 0,
+    "examples_with_missing_ground_truth": 0,
+    "answerable_without_reference_ids": 0,
+    "answerable_without_reference_descriptions": 0,
+    "cannot_answer_without_refusal_style": 1,
+    "ids_descriptions_count_mismatch": 0,
+    "average_question_words": 19.4,
+    "average_ground_truth_words": 19.4667,
+    "average_reference_id_count": 1.1667,
+    "average_reference_description_count": 1.1667,
+    "expected_counts": {
+      "single": 15,
+      "multi": 10,
+      "cannot_answer": 5
+    },
+    "count_deltas": {
+      "single": 0,
+      "multi": 0,
+      "cannot_answer": 0
+    },
+    "expected_total": 30,
+    "total_delta": 0
+  },
+  "metric_summary": {
+    "overall": {
+      "ground_truth_response_relevancy": {
+        "count": 30,
+        "mean": 0.4802,
+        "median": 0.5311,
+        "min": 0.0,
+        "max": 0.7976
+      },
+      "ground_truth_faithfulness": {
+        "count": 25,
+        "mean": 0.7679,
+        "median": 1.0,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "reference_context_precision": {
+        "count": 25,
+        "mean": 0.76,
+        "median": 1.0,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "reference_context_recall": {
+        "count": 25,
+        "mean": 1.0,
+        "median": 1.0,
+        "min": 1.0,
+        "max": 1.0
+      }
+    },
+    "by_type": {
+      "single": {
+        "ground_truth_response_relevancy": {
+          "count": 15,
+          "mean": 0.5612,
+          "median": 0.5821,
+          "min": 0.2271,
+          "max": 0.7956
+        },
+        "ground_truth_faithfulness": {
+          "count": 15,
+          "mean": 1.0,
+          "median": 1.0,
+          "min": 1.0,
+          "max": 1.0
+        },
+        "reference_context_precision": {
+          "count": 15,
+          "mean": 1.0,
+          "median": 1.0,
+          "min": 1.0,
+          "max": 1.0
+        },
+        "reference_context_recall": {
+          "count": 15,
+          "mean": 1.0,
+          "median": 1.0,
+          "min": 1.0,
+          "max": 1.0
+        }
+      },
+      "multi": {
+        "ground_truth_response_relevancy": {
+          "count": 10,
+          "mean": 0.5987,
+          "median": 0.5947,
+          "min": 0.4669,
+          "max": 0.7976
+        },
+        "ground_truth_faithfulness": {
+          "count": 10,
+          "mean": 0.4198,
+          "median": 0.45,
+          "min": 0.0,
+          "max": 1.0
+        },
+        "reference_context_precision": {
+          "count": 10,
+          "mean": 0.4,
+          "median": 0.0,
+          "min": 0.0,
+          "max": 1.0
+        },
+        "reference_context_recall": {
+          "count": 10,
+          "mean": 1.0,
+          "median": 1.0,
+          "min": 1.0,
+          "max": 1.0
+        }
+      },
+      "cannot_answer": {
+        "ground_truth_response_relevancy": {
+          "count": 5,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "ground_truth_faithfulness": {
+          "count": 0,
+          "mean": null,
+          "median": null,
+          "min": null,
+          "max": null
+        },
+        "reference_context_precision": {
+          "count": 0,
+          "mean": null,
+          "median": null,
+          "min": null,
+          "max": null
+        },
+        "reference_context_recall": {
+          "count": 0,
+          "mean": null,
+          "median": null,
+          "min": null,
+          "max": null
+        }
+      }
+    },
+    "metric_error_count": 0
+  },
+  "issues": [
+    {
+      "example_id": "89166680-8d88-4898-9554-ce6f6eaba3e7",
+      "question": "Does the ACEMAGICIAN Mini PC (B0C9XFF3CT) include a preinstalled license for Microsoft Office 365 or any other paid productivity software?",
+      "question_type": "cannot_answer",
+      "issues": [
+        "cannot_answer_without_refusal_style"
+      ]
+    }
+  ],
+  "csv_path": "dataset_analysis_outputs\\rag-evaluation-dataset-30-v2_per_example_20260411_011729.csv",
+  "html_path": "dataset_analysis_outputs\\rag-evaluation-dataset-30-v2_report_20260411_011729.html"
+}

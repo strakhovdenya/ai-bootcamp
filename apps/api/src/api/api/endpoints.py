@@ -1,15 +1,21 @@
 from fastapi import  Request, APIRouter
 from api.api.models import RAGRequest, RAGResponse
+from qdrant_client import QdrantClient
 
 import logging
 
-from api.agents.retrieval_generation import rag_pipeline
+from api.agents.retrieval_generation11 import rag_pipeline
 
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
 logger = logging.getLogger(__name__)
+
+
+
+
+qdrant_client = QdrantClient(url="http://qdrant:6333")
 
 rag_router = APIRouter()
 
@@ -18,7 +24,7 @@ def rag(
     request: Request,
     payload: RAGRequest
 ) -> RAGResponse:
-    answer = rag_pipeline(payload.query)
+    answer = rag_pipeline(payload.query, qdrant_client)
 
     return RAGResponse(
         request_id=request.state.request_id,

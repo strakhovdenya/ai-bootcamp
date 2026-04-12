@@ -1,6 +1,9 @@
 import openai
-from qdrant_client import QdrantClient
+
 from langsmith import traceable, get_current_run_tree
+
+import re
+from typing import List, Dict, Any
 
 
 @traceable(
@@ -55,16 +58,55 @@ def retrieve_data(query, qdrant_client, k=5):
         "similarity_scores": similarity_scores,
     }
 
+@traceable(
+    name="filter_retrieved_context",
+    run_type="retriever"
+)
+def filter_context_by_threshold(context, min_score=0.45, max_context_items=3):
+    filtered_items = []
+
+    for context_id, chunk, rating, score in zip(
+        context["retrieved_context_ids"],
+        context["retrieved_context"],
+        context["retrieved_context_ratings"],
+        context["similarity_scores"],
+    ):
+        if score >= min_score:
+            filtered_items.append(
+                {
+                    "id": context_id,
+                    "chunk": chunk,
+                    "rating": rating,
+                    "score": score,
+                }
+            )
+
+    filtered_items = filtered_items[:max_context_items]
+
+    return {
+        "retrieved_context_ids": [item["id"] for item in filtered_items],
+        "retrieved_context": [item["chunk"] for item in filtered_items],
+        "retrieved_context_ratings": [item["rating"] for item in filtered_items],
+        "similarity_scores": [item["score"] for item in filtered_items],
+        "effective_k": len(filtered_items),
+    }
 
 @traceable(
     name="format_retrieved_context",
     run_type="prompt"
 )
+
 def process_context(context):
+    if not context["retrieved_context"]:
+        return "No sufficiently relevant products were found."
+
     formatted_context = ""
 
-    for id, chunk, rating in zip(context["retrieved_context_ids"], context["retrieved_context"],
-                                 context["retrieved_context_ratings"]):
+    for id, chunk, rating in zip(
+        context["retrieved_context_ids"],
+        context["retrieved_context"],
+        context["retrieved_context_ratings"],
+    ):
         formatted_context += f"-ID: {id}, rating: {rating}, description: {chunk}\n"
 
     return formatted_context
@@ -76,21 +118,27 @@ def process_context(context):
 )
 def build_prompt(preprocessed_context, question):
     prompt = f"""
-        You are a shopping assistant that can answer question about products in stock
-        You will be given a question and a list of context.
+You are a precise and helpful shopping assistant.
 
-        Instructions:
-        - You need to answer question based on the provided context only.
-        - Never use word context and refer to it as the available products.
+Your task is to answer the question using ONLY the available products information.
 
-        Context:
-        {preprocessed_context}
+RULES:
+- Use only the available products information.
+- Do not use external knowledge.
+- Do not invent or assume missing details.
+- If the answer is not available in the products, say that it is not specified.
+- Answer naturally and concisely.
 
-        Question:
-        {question}
-        """
+AVAILABLE PRODUCTS:
+{preprocessed_context}
 
+QUESTION:
+{question}
+
+ANSWER:
+"""
     return prompt
+
 
 
 @traceable(
@@ -119,20 +167,35 @@ def generate_answer(prompt):
 @traceable(
     name="rag_pipeline",
 )
-def rag_pipeline(question, top_k=5):
-    qdrant_client = QdrantClient(url="http://qdrant:6333")
+def rag_pipeline(
+    question,
+    qdrant_client,
+    top_k=10,
+    min_score=0.45,
+    max_context_items=3,
+):
+    raw_context = retrieve_data(question, qdrant_client, top_k)
+    filtered_context = filter_context_by_threshold(
+        raw_context,
+        min_score=min_score,
+        max_context_items=max_context_items,
+    )
 
-    retrieve_context = retrieve_data(question, qdrant_client, top_k)
-    preprocessed_context = process_context(retrieve_context)
+    preprocessed_context = process_context(filtered_context)
     prompt = build_prompt(preprocessed_context, question)
-    answer = generate_answer(prompt)
+    answer = generate_answer(prompt).strip()
 
     final_result = {
         "answer": answer,
         "question": question,
-        "retrieved_context_ids": retrieve_context["retrieved_context_ids"],
-        "retrieved_context": retrieve_context["retrieved_context"],
-        "similarity_scores": retrieve_context["similarity_scores"],
+        "raw_retrieved_context_ids": raw_context["retrieved_context_ids"],
+        "raw_retrieved_context": raw_context["retrieved_context"],
+        "raw_similarity_scores": raw_context["similarity_scores"],
+        "retrieved_context_ids": filtered_context["retrieved_context_ids"],
+        "retrieved_context": filtered_context["retrieved_context"],
+        "similarity_scores": filtered_context["similarity_scores"],
+        "effective_k": filtered_context["effective_k"],
+        "used_similarity_threshold": min_score,
     }
 
     return final_result
