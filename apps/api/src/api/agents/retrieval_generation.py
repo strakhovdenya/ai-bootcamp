@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import instructor
 import numpy as np
 import openai
@@ -5,7 +7,9 @@ import openai
 from langsmith import traceable, get_current_run_tree
 from pydantic import BaseModel, Field
 from qdrant_client import QdrantClient
-from qdrant_client.models import FieldCondition, MatchValue, Filter
+from qdrant_client.models import Filter, FieldCondition, MatchValue, Prefetch, FusionQuery, Document
+
+from api.agents.utils.prompt_management import prompt_template_config
 
 
 class RAGUsedContext(BaseModel):
@@ -46,8 +50,23 @@ def retrieve_data(query, qdrant_client, k=5):
     query_embedding = get_embedding(query)
 
     results = qdrant_client.query_points(
-        collection_name="Amazon-item-collection-00",
-        query=query_embedding,
+        collection_name="Amazon-items-collection-01-hybrid-search",
+        prefetch=[
+            Prefetch(
+                query=query_embedding,
+                using="text-embedding-3-small",
+                limit=20
+            ),
+            Prefetch(
+                query=Document(
+                    text=query,
+                    model="qdrant/bm25"
+                ),
+                using="bm25",
+                limit=20
+            )
+        ],
+        query=FusionQuery(fusion="rrf"),
         limit=k,
     )
 
@@ -128,29 +147,13 @@ def process_context(context):
     run_type="prompt"
 )
 def build_prompt(preprocessed_context, question):
-    prompt = f"""
-    You are a shopping assistant that can answer questions about the products in stock.
+    yaml_file = Path(__file__).resolve().parent / "prompts" / "retrieval_generation.yaml"
+    template = prompt_template_config(
+        yaml_file=str(yaml_file),
+        prompt_key="retrieval_generation",
+    )
+    prompt = template.render(preprocessed_context=preprocessed_context, question=question)
 
-    You will be given a question and a list of context.
-
-    Instructions:
-    - You need to answer the question based on the provided context only.
-    - Never use word context and refer to it as the available products.
-    - As an output you need to provide:
-
-    * The answer to the question based on the provided context.
-    * The list of the IDs of the chunks that were used to answer the question. Only return the ones that are used in the answer.
-    * Short description (1-2 sentences) of the item based on the description provided in the context.
-
-    - The short description should have the name of the item.
-    - The answer to the question should contain detailed information about the product and returned with detailed specification in bullet points
-
-    Context:
-    {preprocessed_context}
-
-    Question:
-    {question}
-    """
     return prompt
 
 
@@ -212,9 +215,10 @@ def rag_pipeline_wrapper(question, top_k=5):
 
     for item in result.get("references", []):
         payload = qdrant_client.query_points(
-            collection_name="Amazon-item-collection-00",
+            collection_name="Amazon-items-collection-01-hybrid-search",
             query=dummy_vector,
             limit=1,
+            using="text-embedding-3-small",
             with_payload=True,
             query_filter=Filter(
                 must=[
