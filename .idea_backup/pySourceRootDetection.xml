@@ -3,7 +3,8 @@
   <component name="PySourceRootDetectionService">
     <option name="sourcePathsSet">
       <set>
-        <option value="$PROJECT_DIR$/apps/api/src" />
+        <option value="$PROJECT_DIR$/apps/api" />
+        <option value="$PROJECT_DIR$/apps/api/evals" />
       </set>
     </option>
   </component>

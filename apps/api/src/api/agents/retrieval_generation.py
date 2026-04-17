@@ -88,38 +88,6 @@ def retrieve_data(query, qdrant_client, k=5):
         "similarity_scores": similarity_scores,
     }
 
-@traceable(
-    name="filter_retrieved_context",
-    run_type="retriever"
-)
-def filter_context_by_threshold(context, min_score=0.45, max_context_items=3):
-    filtered_items = []
-
-    for context_id, chunk, rating, score in zip(
-        context["retrieved_context_ids"],
-        context["retrieved_context"],
-        context["retrieved_context_ratings"],
-        context["similarity_scores"],
-    ):
-        if score >= min_score:
-            filtered_items.append(
-                {
-                    "id": context_id,
-                    "chunk": chunk,
-                    "rating": rating,
-                    "score": score,
-                }
-            )
-
-    filtered_items = filtered_items[:max_context_items]
-
-    return {
-        "retrieved_context_ids": [item["id"] for item in filtered_items],
-        "retrieved_context": [item["chunk"] for item in filtered_items],
-        "retrieved_context_ratings": [item["rating"] for item in filtered_items],
-        "similarity_scores": [item["score"] for item in filtered_items],
-        "effective_k": len(filtered_items),
-    }
 
 @traceable(
     name="format_retrieved_context",

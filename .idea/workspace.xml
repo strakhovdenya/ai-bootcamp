@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="505c5aa5-b98b-4bb4-8455-8d67f112b1a6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/apps/api/src/api/agents/agents.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/api/src/api/agents/graph.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/api/src/api/agents/prompts/intent_router_agent.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/api/src/api/agents/prompts/qa_agent.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/api/src/api/agents/tools.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/api/src/api/agents/utils/utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notebooks/week3/01-langGraph-intro.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notebooks/week3/02-query-rewriting.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notebooks/week3/03-router.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notebooks/week3/04-agent-single-turn.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notebooks/week3/utils/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notebooks/week3/utils/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/ai-bootcamp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ai-bootcamp.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/pySourceRootDetection.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/pySourceRootDetection.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/pyproject.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/api/agents/retrieval_generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/api/agents/retrieval_generation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/src/api/api/endpoints.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/src/api/api/endpoints.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/week2/05-Prompt-Versioning.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/week2/05-Prompt-Versioning.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/reset_kerrnel.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv.lock" beforeDir="false" afterPath="$PROJECT_DIR$/uv.lock" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Jupyter Notebook" />
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="3CJp07XL0ZKpvdehUUtYRAVcNxU" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "main",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.intellij.jupyter.py.connections.configurable.JupyterServersConfigurable",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-b63d5a1f7c97-b61e75351b1f-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-261.22158.340" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="505c5aa5-b98b-4bb4-8455-8d67f112b1a6" name="Changes" comment="" />
+      <created>1776113302992</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1776113302992</updated>
+      <workItem from="1776113305998" duration="122000" />
+      <workItem from="1776113440292" duration="669000" />
+      <workItem from="1776114126445" duration="158000" />
+      <workItem from="1776114407175" duration="48000" />
+      <workItem from="1776114484516" duration="16278000" />
+      <workItem from="1776282041205" duration="9226000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
